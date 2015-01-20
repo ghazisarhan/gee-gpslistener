@@ -30,7 +30,7 @@ namespace geegpslistener
 			{
 				// Device 007 and data are valid
 				log.Debug ("Valid 007 packet recieved."); // TODO: add more info for debug purpose
-				Process007Data (data);
+				Process007Data (data, e);
 			}
 			else
 			{
