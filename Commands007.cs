@@ -48,6 +48,10 @@ namespace geegpslistener
 		const ushort REPLY_SEND_SMS = 0x9957;
 		const ushort REPLY_GET_PLAIN_ADDRESSS = 0x9958; // TODO: Missing from document!
 		const ushort REPLY_GET_GPRMC_FROM_GSM_CELL = 0x9959;
+
+		const ushort OTHER_REPLY_HEART_BEAT = 0xaaaa; // Document says 0xaaaa!
+		const ushort OTHER_REPLY_GET_IP_AND_PORT = 0x0002;
+
 	}
 }
 
