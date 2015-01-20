@@ -54,7 +54,7 @@
     <Compile Include="DbFunctions.cs" />
     <Compile Include="DataProcessor007.cs" />
     <Compile Include="ExtensionMethod.cs" />
-    <Compile Include="Commands.cs" />
+    <Compile Include="Commands007.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
