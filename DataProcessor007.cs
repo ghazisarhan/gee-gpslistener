@@ -1,12 +1,14 @@
 ﻿// TODO: didn't like the ReverseBytesIfLittleEndian() idea, think again
 using System;
 using System.IO;
+using NetSockets;
+using System.Text;
 
 namespace geegpslistener
 {
 	partial class MainClass
 	{
-		static void Process007Data(byte[] data)
+		static void Process007Data(byte[] data, NetClientReceivedEventArgs<byte[]> e)
 		{
 			// Parsing data
 			// TODO: verify endianness
@@ -21,6 +23,85 @@ namespace geegpslistener
 			// 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20
 			// Head- Len-- ID------------------ COMM- Data---- CRC-- FOT--
 
+
+			switch (dataCommand)
+			{
+				// Undocumented command!
+				case OTHER_COMMAND_GET_IP_AND_PORT:
+					// TODO: for testing only
+					Build007Data (dataID, OTHER_REPLY_GET_IP_AND_PORT, Encoding.ASCII.GetBytes ("178.62.117.203:11000"));
+					// TODO: Pass client stream instance to reply to client.
+
+					break;
+				
+				// Never recieved it!
+				case COMMAND_TRACKER_LOGIN:
+
+					break;
+				
+				case COMMAND_SINGLE_LOCATION_REPORT:
+
+					break;
+
+				case COMMAND_ALARM:
+
+					break;
+
+				// Reply to commands
+				// TODO: make it statueful?
+				case REPLY_SET_TIME_INTERVAL_FOR_CONTINOUS_TRACKING:
+					break;
+
+				case REPLY_SET_AUTHORIZED_PHONE_NUMBER:
+					break;
+
+				case REPLY_SET_SPEED_LIMIT_FOR_OVER_SPEED_ALARM:
+					break;
+
+				case REPLY_SET_MOVEMENT_ALERT:
+					break;
+
+				case REPLY_SET_EXTENDED_FUNCTIONS:
+					break;
+
+				case REPLY_INITIALIZE_ALL_PARAMETERS:
+					break;
+
+				case REPLY_SET_GPRS_ALERT_FOR_BUTTON_OR_INPUT:
+					break;
+
+				case REPLY_SET_TELEPHONE_NUMBER_FOR_WIRETAPPING:
+					break;
+
+				case REPLY_SET_TIMEZONE:
+					break;
+
+				case REPLY_READ_TIME_INTERVAL_FOR_CONTINUOUS_TRACKING:
+					break;
+
+				case REPLY_READ_AUTHORIZED_PHONE_NUMBER:
+					break;
+
+				case REPLY_ALARM:
+					break;
+
+				case REPLY_BLACK_BOX_REPORT:
+					break;
+
+				case REPLY_SEND_SMS:
+					break;
+
+				case REPLY_GET_PLAIN_ADDRESSS:
+					break;
+
+				case REPLY_GET_GPRMC_FROM_GSM_CELL:
+					break;
+
+				default:
+					log.Error ("Unknown Command recieved.");
+					// TODO: ignore command!
+					break;
+			}
 
 
 			// TODO: For testing purpose only
