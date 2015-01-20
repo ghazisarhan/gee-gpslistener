@@ -14,9 +14,9 @@ namespace geegpslistener
 			ushort dataLength = BitConverter.ToUInt16 (data, 2).ReverseBytesIfLittleEndian (); 
 			byte[] dataID = data.SubArray (4, 7);
 			ushort dataCommand = BitConverter.ToUInt16 (data, 11).ReverseBytesIfLittleEndian ();
-			byte[] dataData = data.SubArray (13, data.Length - 13 - 4);											// TODO: verify if it will return correct results :: Seems to work
-			ushort dataCRC = BitConverter.ToUInt16 (data, data.Length - 4).ReverseBytesIfLittleEndian ();		// TODO: may raise an error :: Seems to work
-			ushort dataFooter = BitConverter.ToUInt16 (data, data.Length - 2).ReverseBytesIfLittleEndian ();	// TODO: may raise an error :: Seems to work
+			byte[] dataData = data.SubArray (13, data.Length - 13 - 4);
+			ushort dataCRC = BitConverter.ToUInt16 (data, data.Length - 4).ReverseBytesIfLittleEndian ();
+			ushort dataFooter = BitConverter.ToUInt16 (data, data.Length - 2).ReverseBytesIfLittleEndian ();
 			// 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19   
 			// 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20
 			// Head- Len-- ID------------------ COMM- Data---- CRC-- FOT--
@@ -38,16 +38,16 @@ namespace geegpslistener
 
 		static byte[] Build007Data(byte[] ID, ushort command, byte[] data)
 		{
-			// TODO: Verify
-			ushort length = Convert.ToUInt16 (data.Length) + (ushort)17; // TODO: 17 is for 007
+			// TODO: Verify endianness
+			ushort length = Convert.ToUInt16 (data.Length + 17); // TODO: 17 is for 007
 			MemoryStream ms = new MemoryStream ();
 			ms.Append (BitConverter.GetBytes (HEADER_SERVER_TO_DEVICE));
 			ms.Append (BitConverter.GetBytes (length));
 			ms.Append (ID); // TODO: Fill empty bytes of ID here or in the calling procedure
 			ms.Append (BitConverter.GetBytes (command));
 			ms.Append (data);
-			ms.Append (CalculateCRC (ms.ToArray ()));
-			ms.Append (FOOTER);
+			ms.Append (BitConverter.GetBytes (CalculateCRC (ms.ToArray ())));
+			ms.Append (BitConverter.GetBytes (FOOTER));
 			return ms.ToArray ();
 		}
 	}

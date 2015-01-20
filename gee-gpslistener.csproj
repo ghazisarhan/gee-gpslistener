@@ -63,4 +63,8 @@
       <Name>NetSockets</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="LICENSE" />
+    <None Include="README" />
+  </ItemGroup>
 </Project>
